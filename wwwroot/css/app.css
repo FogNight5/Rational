@@ -1,0 +1,162 @@
+:root {
+    --background: #000000;
+    --surface: #1e1e1e;
+    --text-primary: #f0f0f0;
+    --text-secondary: #9a9a9a;
+    --border: #2e2e2e;
+    --accent: #1D9E75;
+}
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+h1:focus {
+    outline: none;
+}
+
+* {
+    touch-action: manipulation;
+}
+
+body {
+    overflow: hidden;
+}
+
+#blazor-error-ui {
+    color-scheme: light only;
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    inset: 20vh 0 auto 0;
+    margin: 0 auto;
+}
+
+    .loading-progress circle {
+        fill: none;
+        stroke: var(--border);
+        stroke-width: 0.6rem;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg);
+    }
+
+        .loading-progress circle:last-child {
+            stroke: var(--accent);
+            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            transition: stroke-dasharray 0.05s ease-in-out;
+        }
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+    .loading-progress-text:after {
+        content: var(--blazor-load-percentage-text, "Loading");
+    }
+
+.btn-primary {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--background);
+    font-weight: 500;
+}
+
+.dash-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+    .dash-list li {
+        margin-bottom: 6px
+    }
+
+.centerlized {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    margin: 40px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* Top-left menu styles */
+.top-left {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+}
+
+.menu-button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.menu-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+    padding: 6px;
+    border-radius: 6px;
+    min-width: 160px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.menu-link {
+    display: block;
+    color: var(--text-primary);
+    padding: 6px 8px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.menu-link:hover {
+    background: rgba(255,255,255,0.03);
+}

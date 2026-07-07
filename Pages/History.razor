@@ -1,0 +1,39 @@
+@page "/verlauf"
+@inject Rational.Interfaces.ILocalStorageService LocalStorageService
+@using Rational.Models
+@using System.Linq
+
+<div class="centerlized main">
+    <h1>Verlauf</h1>
+
+    @if (_task is null)
+    {
+        <p>Keine Einträge gefunden.</p>
+    }
+    else
+    {
+        <ol class="dash-list">
+            @foreach (var ts in _task.CompletedAt.OrderByDescending(d => d))
+            {
+                <li>@ts.ToLocalTime().ToString("g")</li>
+            }
+        </ol>
+    }
+</div>
+
+@code {
+    private DailyTask? _task;
+
+    private const string DailyTaskKey = "dailyTask";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _task = await LocalStorageService.LoadAsync<DailyTask>(DailyTaskKey);
+
+        if (_task is null) // Code duplication #1
+        {
+            _task = new DailyTask { Name = "Tägliche Aufgabe" };
+            await LocalStorageService.SaveAsync(DailyTaskKey, _task);
+        }
+    }
+}

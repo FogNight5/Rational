@@ -1,0 +1,27 @@
+﻿[
+  {
+    "date": "2022-01-06",
+    "temperatureC": 1,
+    "summary": "Sonnig"
+  },
+  {
+    "date": "2022-01-07",
+    "temperatureC": 14,
+    "summary": "Warm"
+  },
+  {
+    "date": "2022-01-08",
+    "temperatureC": -13,
+    "summary": "Kalt"
+  },
+  {
+    "date": "2022-01-09",
+    "temperatureC": -16,
+    "summary": "Noch kälter"
+  },
+  {
+    "date": "2022-01-10",
+    "temperatureC": -2,
+    "summary": "Zu kalt"
+  }
+]

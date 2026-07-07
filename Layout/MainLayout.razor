@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<div class="top-left">
+    <button class="menu-button" @onclick="ToggleMenu" aria-label="Menü">☰</button>
+    <nav class="menu-panel" style="display:@(isMenuOpen ? "block" : "none")">
+        <a class="menu-link" href="/">Startseite</a>
+        <a class="menu-link" href="/verlauf">Verlauf</a>
+    </nav>
+</div>
+
+<div class="page">
+    @Body
+</div>
+
+@code {
+    private bool isMenuOpen;
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+}

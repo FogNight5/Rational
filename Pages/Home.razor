@@ -1,0 +1,61 @@
+﻿@page "/"
+@inject Rational.Interfaces.ILocalStorageService LocalStorageService
+@using Rational.Models
+@using System.Linq
+
+@if (_task is null)
+{
+    <p>No task found.</p>
+}
+else
+{
+    <div class="centerlized main">
+        <h1>@_task.Name</h1>
+
+        @if (_showDoDailyTaskPrompt)
+        {
+            <p>Erledige deine tägliche Aufgabe</p>
+            <button class="btn btn-primary" @onclick="MarkCompleted">Erledigt</button>
+        }
+        else
+        {
+            <p>Tägliche Aufgabe erledigt.</p>
+        }
+    </div>
+}
+
+@code {
+    private DailyTask? _task;
+    private bool _showDoDailyTaskPrompt;
+
+    private const string DailyTaskKey = "dailyTask";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _task = await LocalStorageService.LoadAsync<DailyTask>(DailyTaskKey);
+
+        if (_task is null) // Code duplication #1
+        {
+            _task = new DailyTask { Name = "Tägliche Aufgabe" };
+            await LocalStorageService.SaveAsync(DailyTaskKey, _task);
+        }
+
+        _showDoDailyTaskPrompt = !IsCompletedToday(_task);
+    }
+
+    private bool IsCompletedToday(DailyTask task)
+    {
+        var today = DateTimeOffset.Now.Date;
+        return task.CompletedAt.Any(d => d.Date == today);
+    }
+
+    private async Task MarkCompleted()
+    {
+        if (_task is null)
+            return;
+
+        _task.CompletedAt.Add(DateTimeOffset.Now);
+        await LocalStorageService.SaveAsync(DailyTaskKey, _task);
+        _showDoDailyTaskPrompt = false;
+    }
+}

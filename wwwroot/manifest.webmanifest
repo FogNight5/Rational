@@ -1,0 +1,22 @@
+{
+  "name": "Rational Selfimprovement",
+  "short_name": "Rational",
+  "id": "./",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#03173d",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "Rational_Icon_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "Rational_Icon_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

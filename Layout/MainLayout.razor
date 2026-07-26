@@ -1,10 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="top-left">
-    <button class="menu-button" @onclick="ToggleMenu" aria-label="Menü">☰</button>
-    <nav class="menu-panel" style="display:@(isMenuOpen ? "block" : "none")">
-        <NavLink class="menu-link" href="">Startseite</NavLink>
-        <NavLink class="menu-link" href="verlauf">Verlauf</NavLink>
+    <button class="menu-button" @onclick="ToggleMenu" aria-label="Menü"></button>
+</div>
+
+<div class="menu-overlay @(isMenuClosing ? "closing" : "")" style="display:@(isMenuOpen || isMenuClosing ? "flex" : "none")" @onclick="CloseMenu">
+    <nav class="menu-panel" @onclick:stopPropagation="true">
+        <NavLink class="menu-link" href="" @onclick="CloseMenu">Startseite</NavLink>
+        <NavLink class="menu-link" href="verlauf" @onclick="CloseMenu">Verlauf</NavLink>
     </nav>
 </div>
 
@@ -14,9 +17,32 @@
 
 @code {
     private bool isMenuOpen;
+    private bool isMenuClosing;
 
-    private void ToggleMenu()
+    private async Task ToggleMenu()
     {
-        isMenuOpen = !isMenuOpen;
+        if (isMenuClosing)
+            return;
+
+        if (isMenuOpen)
+        {
+            await CloseMenu();
+        }
+        else
+        {
+            isMenuOpen = true;
+            isMenuClosing = false;
+        }
+    }
+
+    private async Task CloseMenu()
+    {
+        if (!isMenuOpen || isMenuClosing)
+            return;
+
+        isMenuClosing = true;
+        await Task.Delay(300);
+        isMenuOpen = false;
+        isMenuClosing = false;
     }
 }

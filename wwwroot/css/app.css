@@ -125,7 +125,7 @@ body {
 
 h1 {
     font-size: 40px;
-    margin-top: 80px;
+    margin-top: 180px;
     margin-bottom: 40px;
 }
 
@@ -138,39 +138,160 @@ h2 {
 /* Top-left menu styles */
 .top-left {
     position: fixed;
-    top: 12px;
-    left: 12px;
+    top: 32px;
+    left: 32px;
     z-index: 1000;
 }
 
 .menu-button {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: transparent;
+    border: 4px solid white;
     color: var(--text-primary);
-    padding: 6px 10px;
-    border-radius: 6px;
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.menu-button:active {
+    transform: scale(0.95);
+}
+
+.menu-button:focus {
+    outline: none;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
 }
 
 .menu-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    margin-top: 8px;
-    padding: 6px;
-    border-radius: 6px;
-    min-width: 160px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    background: var(--background);
+    border: none;
+    padding: 40px 20px;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: none;
+    animation: slideIn 0.3s ease;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+}
+
+.menu-overlay.closing {
+    animation: fadeOut 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 .menu-link {
     display: block;
     color: var(--text-primary);
-    padding: 6px 8px;
+    padding: 24px 48px;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 28px;
+    font-weight: 500;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-.menu-link:hover {
-    background: rgba(255,255,255,0.03);
+.menu-link:active {
+    background: var(--accent);
+    color: #000;
+    transform: scale(0.98);
+}
+
+.menu-link:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(29, 158, 117, 0.4);
+}
+
+/* Bottom third action button - thumb friendly size */
+.btn-bottom-action {
+    position: fixed;
+    bottom: 155px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    padding: 10px 24px;
+    min-height: 55px;
+    min-width: 55px;
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-bottom-action:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.btn-bottom-action:focus {
+    outline: none;
+    box-shadow: 0 0 16px rgba(29, 158, 117, 0.6);
+}
 }

@@ -1,13 +1,16 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
 
 <div class="top-left">
-    <button class="menu-button" @onclick="ToggleMenu" aria-label="Menü"></button>
+    <button class="menu-button" @ref="buttonRef" aria-label="Menü"></button>
 </div>
 
-<div class="menu-overlay @(isMenuClosing ? "closing" : "")" style="display:@(isMenuOpen || isMenuClosing ? "flex" : "none")" @onclick="CloseMenu">
-    <nav class="menu-panel" @onclick:stopPropagation="true">
-        <NavLink class="menu-link" href="" @onclick="CloseMenu">Startseite</NavLink>
-        <NavLink class="menu-link" href="verlauf" @onclick="CloseMenu">Verlauf</NavLink>
+<div class="menu-overlay" style="display:none" @ref="overlayRef">
+    <nav class="menu-panel">
+        <NavLink class="menu-link" href="" data-route="" @onclick="CloseMenuNow">Startseite</NavLink>
+        <NavLink class="menu-link" href="verlauf" data-route="verlauf" @onclick="CloseMenuNow">Verlauf</NavLink>
     </nav>
 </div>
 
@@ -16,33 +19,32 @@
 </div>
 
 @code {
-    private bool isMenuOpen;
-    private bool isMenuClosing;
+    private ElementReference buttonRef;
+    private ElementReference overlayRef;
+    private DotNetObjectReference<MainLayout>? dotNetRef;
 
-    private async Task ToggleMenu()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (isMenuClosing)
-            return;
-
-        if (isMenuOpen)
+        if (firstRender)
         {
-            await CloseMenu();
-        }
-        else
-        {
-            isMenuOpen = true;
-            isMenuClosing = false;
+            dotNetRef = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("dragMenuInterop.init", buttonRef, overlayRef, dotNetRef);
         }
     }
 
-    private async Task CloseMenu()
+    [JSInvokable]
+    public void NavigateTo(string route)
     {
-        if (!isMenuOpen || isMenuClosing)
-            return;
+        Navigation.NavigateTo(route);
+    }
 
-        isMenuClosing = true;
-        await Task.Delay(300);
-        isMenuOpen = false;
-        isMenuClosing = false;
+    private async Task CloseMenuNow()
+    {
+        await JS.InvokeVoidAsync("dragMenuInterop.close", overlayRef);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        dotNetRef?.Dispose();
     }
 }

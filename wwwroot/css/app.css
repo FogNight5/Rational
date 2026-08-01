@@ -144,6 +144,7 @@ h2 {
 }
 
 .menu-button {
+    position: relative;
     background: transparent;
     border: 4px solid white;
     color: var(--text-primary);
@@ -159,6 +160,15 @@ h2 {
     transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+}
+
+.menu-button::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
 }
 
 .menu-button:active {
@@ -239,7 +249,6 @@ h2 {
     padding: 24px 48px;
     text-decoration: none;
     border-radius: 8px;
-    transition: all 0.15s ease;
     text-align: center;
     white-space: nowrap;
     font-size: 28px;
@@ -252,12 +261,6 @@ h2 {
     touch-action: manipulation;
 }
 
-.menu-link:active {
-    background: var(--accent);
-    color: #000;
-    transform: scale(0.98);
-}
-
 .menu-link:focus {
     outline: none;
     box-shadow: 0 0 12px rgba(29, 158, 117, 0.4);
@@ -266,7 +269,7 @@ h2 {
 /* Bottom third action button - thumb friendly size */
 .btn-bottom-action {
     position: fixed;
-    bottom: 155px;
+    bottom: 180px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
@@ -294,4 +297,22 @@ h2 {
     outline: none;
     box-shadow: 0 0 16px rgba(29, 158, 117, 0.6);
 }
+
+.menu-link.hovered {
+    background: var(--accent);
+    color: #000;
 }
+
+.menu-button,
+.menu-panel,
+.menu-link {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+    .menu-button.dragging {
+        transition: none;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        transform-origin: center;
+    }

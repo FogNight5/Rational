@@ -117,16 +117,36 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.centerlized.history-container {
+    justify-content: flex-start;
+    padding-top: 40px;
 }
 
 .main {
     margin: 40px;
+    width: 100%;
+    max-height: calc(100vh - 80px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.main h1 {
+    margin: 0 0 1rem 0;
+    flex-shrink: 0;
 }
 
 h1 {
     font-size: 40px;
-    margin-top: 180px;
-    margin-bottom: 40px;
+    margin: 0;
+}
+
+.history-container h1 {
+    margin: 0 0 1rem 0;
 }
 
 h2 {
@@ -330,11 +350,6 @@ h2 {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-}
-
-.history-container h1 {
-    flex-shrink: 0;
-    margin: 0 0 1rem 0;
 }
 
 .history-list-wrapper {

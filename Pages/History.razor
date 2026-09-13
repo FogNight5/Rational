@@ -2,6 +2,7 @@
 @inject Rational.Interfaces.ILocalStorageService LocalStorageService
 @using Rational.Models
 @using System.Linq
+@using System.Text.Json
 
 <div class="centerlized main">
     <h1>Verlauf</h1>
@@ -18,11 +19,21 @@
                 <li>@ts.ToLocalTime().ToString("g")</li>
             }
         </ol>
+
+        @if (_task.CompletedAt.Count > 0)
+        {
+            <div class="export-section">
+                <button class="btn btn-secondary" @onclick="CopyExportToClipboard">
+                    @(_copyFeedback == "" ? "Exportieren & Kopieren" : _copyFeedback)
+                </button>
+            </div>
+        }
     }
 </div>
 
 @code {
     private DailyTask? _task;
+    private string _copyFeedback = "";
 
     private const string DailyTaskKey = "dailyTask";
 
@@ -36,4 +47,29 @@
             await LocalStorageService.SaveAsync(DailyTaskKey, _task);
         }
     }
+
+    private async Task CopyExportToClipboard()
+    {
+        if (_task?.CompletedAt.Count == 0)
+            return;
+
+        var exportData = _task!.CompletedAt
+            .OrderBy(d => d)
+            .Select(ts => new { Timestamp = ts.ToString("O") })
+            .ToList();
+
+        string json = JsonSerializer.Serialize(exportData);
+
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", json);
+
+        _copyFeedback = "✓ Kopiert!";
+        StateHasChanged();
+
+        await Task.Delay(2000);
+        _copyFeedback = "";
+        StateHasChanged();
+    }
+
+    [Inject]
+    private IJSRuntime JS { get; set; } = default!;
 }

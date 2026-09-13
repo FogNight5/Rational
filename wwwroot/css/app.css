@@ -316,3 +316,12 @@ h2 {
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
         transform-origin: center;
     }
+
+.export-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+}
+    }

@@ -324,4 +324,42 @@ h2 {
     display: flex;
     justify-content: center;
 }
+
+.history-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.history-container h1 {
+    flex-shrink: 0;
+    margin: 0 0 1rem 0;
+}
+
+.history-list-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 1rem;
+    padding-right: 0.5rem;
+}
+
+.history-list-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.history-list-wrapper::-webkit-scrollbar-track {
+    background: var(--surface);
+    border-radius: 4px;
+}
+
+.history-list-wrapper::-webkit-scrollbar-thumb {
+    background: var(--text-secondary);
+    border-radius: 4px;
+}
+
+.history-list-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
     }

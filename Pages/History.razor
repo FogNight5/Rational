@@ -4,7 +4,7 @@
 @using System.Linq
 @using System.Text.Json
 
-<div class="centerlized main">
+<div class="centerlized main history-container">
     <h1>Verlauf</h1>
 
     @if (_task is null)
@@ -13,12 +13,14 @@
     }
     else
     {
-        <ol class="dash-list">
-            @foreach (var ts in _task.CompletedAt.OrderByDescending(d => d))
-            {
-                <li>@ts.ToLocalTime().ToString("g")</li>
-            }
-        </ol>
+        <div class="history-list-wrapper">
+            <ol class="dash-list">
+                @foreach (var ts in _task.CompletedAt.OrderByDescending(d => d))
+                {
+                    <li>@ts.ToLocalTime().ToString("g")</li>
+                }
+            </ol>
+        </div>
 
         @if (_task.CompletedAt.Count > 0)
         {
